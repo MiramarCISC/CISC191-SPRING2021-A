@@ -135,6 +135,13 @@ public class BoardGUI extends Stage {
                         System.out.println("I selected space 3  after calling updateBoardPlayer1() method in server class");
                     }
                 }
+                if(e.getX() < 200 && e.getY() > 200 && e.getY() < 400){
+                    space4 = server.updateBoardPlayer1(1,0, turn);
+                    if(space4){
+                        drawSpace4x();   
+                        //turn = turn + 1; ? 
+                    }
+                }
 
             });
 
