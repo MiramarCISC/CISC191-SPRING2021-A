@@ -5,9 +5,9 @@ public class Game implements Runnable {
   private final Player playerTwo;
   private Player turnPlayer;
   private final char[][] board = new char[3][3];
-  public Game(Socket socketOne, Socket socketTwo) throws Exception {
-    this.playerOne = turnPlayer = new Player(socketOne, 'X');
-    this.playerTwo = new Player(socketTwo, 'O');
+  public Game(Socket connectionOne, Socket connectionTwo) throws Exception {
+    this.playerOne = turnPlayer = new Player(connectionOne, 'X');
+    this.playerTwo = new Player(connectionTwo, 'O');
     for (int i = 0; i < 3; ++i) {
       for (int j = 0; j < 3; ++j) board[i][j] = ' ';
     }
