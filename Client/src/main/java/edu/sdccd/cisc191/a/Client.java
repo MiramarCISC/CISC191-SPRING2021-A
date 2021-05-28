@@ -36,9 +36,9 @@ public class Client extends Application {
     try {
       int port = 4646;
       InetAddress serverIp = InetAddress.getLocalHost();
-      Socket socket = new Socket(serverIp, port);
-      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-      PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+      Socket connection = new Socket(serverIp, port);
+      BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+      PrintWriter out = new PrintWriter(connection.getOutputStream(), true);
       System.out.printf("Client (%s) connected to Tic-Tac-Toe server (%s) on port %d.%n", InetAddress.getLocalHost().getCanonicalHostName(), serverIp.getCanonicalHostName(), port);
       BorderPane root = new BorderPane();
       Rectangle2D screen = Screen.getPrimary().getBounds();
