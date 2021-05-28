@@ -9,8 +9,8 @@ import javafx.stage.*;
 import java.io.*;
 import java.net.*;
 public class Client extends Application {
-  private final static String myTurnMsg = "Your turn.";
-  private final static String opponentTurnMsg = "Opponent's turn.";
+  private static final String myTurnMsg = "Your turn.";
+  private static final String opponentTurnMsg = "Opponent's turn.";
   private final Label label = new Label();
   private double cellSize;
   private GraphicsContext context;
