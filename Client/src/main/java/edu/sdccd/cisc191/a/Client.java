@@ -1,52 +1,91 @@
 package edu.sdccd.cisc191.a;
-
-import java.net.*;
-import java.util.Scanner;
+import javafx.application.*;
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.canvas.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
 import java.io.*;
-
-/**
- * This program opens a connection to a computer specified
- * as the first command-line argument.  If no command-line
- * argument is given, it prompts the user for a computer
- * to connect to.  The connection is made to
- * the port specified by LISTENING_PORT.  The program reads one
- * line of text from the connection and then closes the
- * connection.  It displays the text that it read on
- * standard output.  This program is meant to be used with
- * the server program, DateServer, which sends the current
- * date and time on the computer where the server is running.
- */
-
-public class Client {
-    private Socket clientSocket;
-    private PrintWriter out;
-    private BufferedReader in;
-
-    public void startConnection(String ip, int port) throws IOException {
-        clientSocket = new Socket(ip, port);
-        out = new PrintWriter(clientSocket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-    }
-
-    public CustomerResponse sendRequest() throws Exception {
-        out.println(CustomerRequest.toJSON(new CustomerRequest(1)));
-        return CustomerResponse.fromJSON(in.readLine());
-    }
-
-    public void stopConnection() throws IOException {
-        in.close();
-        out.close();
-        clientSocket.close();
-    }
-    public static void main(String[] args) {
-        Client client = new Client();
+import java.net.*;
+public class Client extends Application {
+  private final static String myTurnMsg = "Your turn.";
+  private final static String opponentTurnMsg = "Opponent's turn.";
+  private final Label label = new Label();
+  private double cellSize;
+  private GraphicsContext context;
+  private boolean myTurn() { return label.getText().equals(myTurnMsg); }
+  private void drawBoard() {
+    context.strokeLine(cellSize, 0, cellSize, cellSize * 3);
+    context.strokeLine(cellSize * 2, 0, cellSize * 2, cellSize * 3);
+    context.strokeLine(0, cellSize, cellSize * 3, cellSize);
+    context.strokeLine(0, cellSize * 2, cellSize * 3, cellSize * 2);
+  }
+  private void drawCell(MoveResponse response) {
+    if (response.piece == 'X') {
+      context.strokeLine(cellSize * response.row, cellSize * response.col, cellSize * (response.row + 1), cellSize * (response.col + 1));
+      context.strokeLine(cellSize * response.row, cellSize * (response.col + 1), cellSize * (response.row + 1), cellSize * response.col);
+    } else context.strokeOval(cellSize * response.row, cellSize * response.col, cellSize, cellSize);
+  }
+  private void update(MoveResponse response, String turnMsg) {
+    drawCell(response);
+    if (response.winner != ' ') label.setText("Player " + response.winner + " wins!\n"); else label.setText(turnMsg);
+  }
+  public void start(Stage stage) {
+    stage.setResizable(false);
+    try {
+      int port = 4646;
+      InetAddress serverIp = InetAddress.getLocalHost();
+      Socket socket = new Socket(serverIp, port);
+      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+      PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+      System.out.printf("Client (%s) connected to Tic-Tac-Toe server (%s) on port %d.%n", InetAddress.getLocalHost().getCanonicalHostName(), serverIp.getCanonicalHostName(), port);
+      BorderPane root = new BorderPane();
+      Rectangle2D screen = Screen.getPrimary().getBounds();
+      double size = screen.getWidth() / 3;
+      cellSize = size / 3;
+      Scene scene = new Scene(root, size, size);
+      Canvas canvas = new Canvas(size, size);
+      context = canvas.getGraphicsContext2D();
+      drawBoard();
+      label.setText("Waiting for player 2");
+      root.setBottom(label);
+      root.getChildren().add(canvas);
+      stage.setTitle("Networked Tic-Tac-Toe");
+      stage.setScene(scene);
+      stage.show();
+      new Thread(() -> {
         try {
-            client.startConnection("127.0.0.1", 4444);
-            System.out.println(client.sendRequest().toString());
-            client.stopConnection();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-} //end class Client
-
+          String serverMsg;
+          while (true) {
+            Thread.sleep(1000);
+            if (myTurn()) continue;
+            serverMsg = in.readLine();
+            if (serverMsg == null) {
+              label.setText("Lost connection to server.");
+            } else if (serverMsg.equals("Game has begun.")) {
+              String turn = in.readLine();
+              Platform.runLater(() -> {
+                try { label.setText(turn); } catch (Exception exception) { exception.printStackTrace(); }
+              });
+            } else if (!myTurn()) {
+              MoveResponse response = MoveResponse.fromJSON(serverMsg);
+              Platform.runLater(() -> { try { update(response, myTurnMsg); } catch (Exception exception) { exception.printStackTrace(); } });
+            }
+          }
+        } catch (Exception exception) { exception.printStackTrace(); }
+      }).start();
+      canvas.setOnMouseClicked(event -> {
+        try {
+          if (myTurn()) {
+            out.println(new MoveRequest((int)(event.getX() / cellSize), (int)(event.getY() / cellSize)).toJSON());
+            String response = in.readLine();
+            MoveResponse moveResponse = MoveResponse.fromJSON(response);
+            if (moveResponse.valid) update(moveResponse, opponentTurnMsg);
+          }
+        } catch (Exception exception) { exception.printStackTrace(); }
+      });
+    } catch (Exception exception) { exception.printStackTrace(); }
+  }
+  public static void main(String[] args) { launch(args); }
+}
