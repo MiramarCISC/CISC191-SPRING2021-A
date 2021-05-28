@@ -1,5 +1,10 @@
 # CISC 191 (Spring 2021, Group A) Final Project [Tic-tac-toe]
 
+## Starting the game
+Run the server class once to host a game. The host will be waiting until a client joins.<br />
+Once a server is running, add as many pairs of clients as desired. <br />
+The game will start once a host is paired with a client.
+
 ## Prerequisites
 
 1. Maven
