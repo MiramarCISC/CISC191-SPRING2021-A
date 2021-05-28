@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.sdccd.cisc191.a</groupId>
     <artifactId>FinalProject</artifactId>
@@ -10,19 +11,12 @@
         <module>Server</module>
         <module>Client</module>
     </modules>
-
     <properties>
-        <!-- Project Globals -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <!-- Dependency Versions -->
-        <jupiter.version>5.7.1</jupiter.version>
-
-        <!-- Plugin Versions -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
-        <compile.java.version>14</compile.java.version>
+        <compile.java.version>8</compile.java.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
@@ -30,16 +24,6 @@
         <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -67,7 +51,6 @@
                     <workingDirectory>target</workingDirectory>
                 </configuration>
             </plugin>
-            <!-- Add source to jar manifest -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -97,7 +80,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Add versioning to jar manifest -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -130,8 +112,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <!-- Distribute to internal repo -->
     <distributionManagement>
         <repository>
             <id>cisc191</id>
