@@ -5,9 +5,9 @@ public class Player {
   public BufferedReader in;
   public PrintWriter out;
   public char piece;
-  public Player(Socket socket, char piece) throws Exception {
-    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-    out = new PrintWriter(socket.getOutputStream(), true);
+  public Player(Socket connection, char piece) throws Exception {
+    in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+    out = new PrintWriter(connection.getOutputStream(), true);
     this.piece = piece;
   }
 }
