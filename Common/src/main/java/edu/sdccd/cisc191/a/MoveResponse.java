@@ -1,3 +1,5 @@
+// Author: Muaaz Khan
+// Description: Move response from server, includes piece and winner if applicable
 package edu.sdccd.cisc191.a;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.*;
