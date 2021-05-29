@@ -12,7 +12,7 @@ public class Server {
     }).start();
     int port = 4646;
     try (ServerSocket listener = new ServerSocket(port)) {
-      System.out.printf("Tic-Tac-Toe server (%s) listening for client connections on port %d...%n%n", InetAddress.getLocalHost().getCanonicalHostName(), port);
+      System.out.printf("Tic-Tac-Toe server (%s) listening for client connections on port %d...%n", InetAddress.getLocalHost().getCanonicalHostName(), port);
       while (true) new Thread(new Game(listener.accept(), listener.accept())).start();
     } catch (Exception exception) { exception.printStackTrace(); }
   }

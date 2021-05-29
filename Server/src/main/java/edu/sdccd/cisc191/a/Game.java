@@ -36,18 +36,18 @@ public class Game implements Runnable {
     if (boardIsFull()) return 'T';
     return ' ';
   }
-  private bool validPos(int pos) { return pos > -1 && pos < 3; }
+  private boolean validPos(int pos) { return pos > -1 && pos < 3; }
   @Override
   public void run() {
     init();
     try {
       while (true) {
-        MoveRequest moveRequest = MoveRequest.fromJSON(turnPlayer.in.readLine());
+        MoveRequest request = MoveRequest.fromJSON(turnPlayer.in.readLine());
         boolean valid = false;
-        if (validPos(moveRequest.row) && validPos(moveRequest.col) && board[moveRequest.row][moveRequest.col] == ' ') valid = true;
-        if (valid) board[moveRequest.row][moveRequest.col] = turnPlayer.piece;
+        if (validPos(request.row) && validPos(request.col) && board[request.row][request.col] == ' ') valid = true;
+        if (valid) board[request.row][request.col] = turnPlayer.piece;
         char winner = getWinner();
-        MoveResponse moveResponse = new MoveResponse(moveRequest.row, moveRequest.col, turnPlayer.piece, valid, winner);
+        MoveResponse moveResponse = new MoveResponse(request.row, request.col, turnPlayer.piece, valid, winner);
         String response = moveResponse.toJSON();
         playerOne.out.println(response);
         playerTwo.out.println(response);
