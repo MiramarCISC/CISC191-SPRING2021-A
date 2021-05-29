@@ -1,3 +1,5 @@
+// Author: Muaaz Khan
+// Description: Encapsulate I/O streams and a player's piece/mark
 package edu.sdccd.cisc191.a;
 import java.io.*;
 import java.net.*;
