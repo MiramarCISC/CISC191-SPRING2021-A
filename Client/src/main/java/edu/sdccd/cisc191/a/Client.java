@@ -1,5 +1,5 @@
-// Authors: Muaaz Khan, Markus Delgado
-// Description: Client class to connect to the server
+// Authors: Muaaz Khan, Markus Delgado, Hosna Hyat, Tam Nguyen, Abraham Lopez Ceron
+// Description: Client class to connect to the server, displays board GUI
 package edu.sdccd.cisc191.a;
 import javafx.application.*;
 import javafx.geometry.*;
