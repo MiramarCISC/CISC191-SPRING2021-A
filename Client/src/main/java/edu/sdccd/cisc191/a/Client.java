@@ -31,7 +31,7 @@ public class Client extends Application {
   }
   private void update(MoveResponse response, String turnMsg) {
     drawCell(response);
-    if (response.winner != ' ') label.setText(response.winner == 'T' ? "Tie." : "Player " + response.winner + " wins" + "!\n"); else label.setText(turnMsg);
+    if (response.winner != ' ') label.setText(response.winner == 'T' ? "Tie." : response.winner + " wins" + "!\n"); else label.setText(turnMsg);
   }
   public void start(Stage stage) {
     stage.setResizable(false);
