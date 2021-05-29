@@ -36,6 +36,7 @@ public class Game implements Runnable {
     if (boardIsFull()) return 'T';
     return ' ';
   }
+  private bool validPos(int pos) { return pos > 1 && pos < 3; }
   @Override
   public void run() {
     init();
@@ -43,7 +44,7 @@ public class Game implements Runnable {
       while (true) {
         MoveRequest moveRequest = MoveRequest.fromJSON(turnPlayer.in.readLine());
         boolean valid = false;
-        if (moveRequest.row >= 0 && moveRequest.row <= 2 && moveRequest.col >= 0 && moveRequest.col <= 2 && board[moveRequest.row][moveRequest.col] == ' ') valid = true;
+        if (validPos(moveRequest.row) && validPos(moveRequest.col) && board[moveRequest.row][moveRequest.col] == ' ') valid = true;
         if (valid) board[moveRequest.row][moveRequest.col] = turnPlayer.piece;
         char winner = getWinner();
         MoveResponse moveResponse = new MoveResponse(moveRequest.row, moveRequest.col, turnPlayer.piece, valid, winner);
