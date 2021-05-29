@@ -1,3 +1,5 @@
+// Author: Muaaz Khan, Markus Delgado
+// Description: Server class that listens for client connections and passes pairs to a game handler 
 package edu.sdccd.cisc191.a;
 import java.net.*;
 import java.util.*;
