@@ -1,3 +1,5 @@
+// Authors: Muaaz Khan, Markus Delgado
+// Description: Client class to connect to the server
 package edu.sdccd.cisc191.a;
 import javafx.application.*;
 import javafx.geometry.*;
