@@ -50,7 +50,7 @@ public class Client extends Application {
       Canvas canvas = new Canvas(size, size);
       context = canvas.getGraphicsContext2D();
       drawBoard();
-      label.setText("Waiting for player 2");
+      label.setText("Waiting for player 2...");
       root.setBottom(label);
       root.getChildren().add(canvas);
       stage.setTitle("Networked Tic-Tac-Toe");
