@@ -36,7 +36,7 @@ public class Game implements Runnable {
     if (boardIsFull()) return 'T';
     return ' ';
   }
-  private bool validPos(int pos) { return pos > 1 && pos < 3; }
+  private bool validPos(int pos) { return pos > -1 && pos < 3; }
   @Override
   public void run() {
     init();
