@@ -41,7 +41,7 @@ public class Client extends Application {
       Socket connection = new Socket(serverIp, port);
       BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
       PrintWriter out = new PrintWriter(connection.getOutputStream(), true);
-      System.out.printf("Client (%s) connected to Tic-Tac-Toe server (%s) on port %d.%n", InetAddress.getLocalHost().getCanonicalHostName(), serverIp.getCanonicalHostName(), port);
+      System.out.printf("Client (%s) connected to Tic-Tac-Toe server (%s) on port %d.%n%n", InetAddress.getLocalHost().getCanonicalHostName(), serverIp.getCanonicalHostName(), port);
       BorderPane root = new BorderPane();
       Rectangle2D screen = Screen.getPrimary().getBounds();
       double size = screen.getWidth() / 3;
