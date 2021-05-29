@@ -1,3 +1,5 @@
+// Author: Muaaz Khan
+// Description: A move request from a client
 package edu.sdccd.cisc191.a;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.*;
