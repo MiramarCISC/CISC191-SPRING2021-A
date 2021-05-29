@@ -1,3 +1,5 @@
+// Authors: Markus Delgado, Muaaz Khan, Abraham Lopez Ceron, Tam Nguyen, Hosna Hyat
+// Description: Handles a game for 2 clients 
 package edu.sdccd.cisc191.a;
 import java.net.*;
 public class Game implements Runnable {
